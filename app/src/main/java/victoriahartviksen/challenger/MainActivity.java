@@ -1,6 +1,7 @@
 package victoriahartviksen.challenger;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Chronometer;
+
+import static victoriahartviksen.challenger.R.id.fab;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private Chronometer main_timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        main_timer = (Chronometer)findViewById(R.id.main_timer);
+        Button startbutton = (Button)findViewById(R.id.start_button);
+        startbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_timer.setBase(SystemClock.elapsedRealtime());
+                main_timer.start();
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
