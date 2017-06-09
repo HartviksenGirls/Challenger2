@@ -18,6 +18,7 @@ import static victoriahartviksen.challenger.R.id.fab;
 public class MainActivity extends AppCompatActivity {
 
     private Chronometer main_timer;
+    private long elapsed_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +26,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        elapsed_time = 0;
+
 
         main_timer = (Chronometer)findViewById(R.id.mainTimer);
+        main_timer.setBase(SystemClock.elapsedRealtime());
         Button startbutton = (Button)findViewById(R.id.start_button);
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   main_timer.setBase(SystemClock.elapsedRealtime());
+                main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time);
                 main_timer.start();
-
             }
         });
+
 
         Button stopbutton = (Button)findViewById(R.id.stop_button);
         stopbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 main_timer.stop();
+                elapsed_time = SystemClock.elapsedRealtime() - main_timer.getBase();
 
             }
         });
@@ -51,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 main_timer.stop();
+                elapsed_time = 0;
                 main_timer.setBase(SystemClock.elapsedRealtime());
+
             }
         });
 
