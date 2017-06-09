@@ -26,14 +26,32 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        main_timer = (Chronometer)findViewById(R.id.main_timer);
+        main_timer = (Chronometer)findViewById(R.id.mainTimer);
         Button startbutton = (Button)findViewById(R.id.start_button);
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main_timer.setBase(SystemClock.elapsedRealtime());
+             //   main_timer.setBase(SystemClock.elapsedRealtime());
                 main_timer.start();
 
+            }
+        });
+
+        Button stopbutton = (Button)findViewById(R.id.stop_button);
+        stopbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_timer.stop();
+
+            }
+        });
+
+        Button restartbutton = (Button)findViewById(R.id.restart_button);
+        restartbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_timer.stop();
+                main_timer.setBase(SystemClock.elapsedRealtime());
             }
         });
 
