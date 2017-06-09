@@ -67,8 +67,15 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                elapsed_time = SystemClock.elapsedRealtime() - main_timer.getBase();
+
+                if (elapsed_time >= 120000) {
+                    SendPIntent();
+
+                } else {
+                    Snackbar.make(view, "You have to do 2 mins", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
     }
