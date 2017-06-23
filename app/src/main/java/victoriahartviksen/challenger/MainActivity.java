@@ -1,6 +1,8 @@
 package victoriahartviksen.challenger;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -10,16 +12,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
-
-import static victoriahartviksen.challenger.R.id.fab;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Chronometer main_timer;
     private long elapsed_time;
+    private long ten_seconds = 5000;
+    private long two_minutes = 10000; //120000
+    private boolean end_beeped = false;
+    private boolean warning_beep = false;
+    private long get_elapsed_time() {
+        return SystemClock.elapsedRealtime() - main_timer.getBase();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 main_timer.stop();
                 elapsed_time = 0;
                 main_timer.setBase(SystemClock.elapsedRealtime());
+                end_beeped = false;
+                warning_beep = false;
 
             }
         });
@@ -67,14 +77,43 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                elapsed_time = SystemClock.elapsedRealtime() - main_timer.getBase();
+                elapsed_time = get_elapsed_time();
 
-                if (elapsed_time >= 120000) {
+                if (elapsed_time >= two_minutes) {
                     SendPIntent();
 
                 } else {
                     Snackbar.make(view, "You have to do 2 mins", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
+            }
+        });
+
+        main_timer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
+        {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                elapsed_time = get_elapsed_time();
+                //2 mins have passed
+                if (!end_beeped) {
+                    if (elapsed_time >= two_minutes) {
+
+                        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
+                        try {
+                            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+                            Thread.sleep(200);
+                            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+                            Thread.sleep(200);
+                            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+                            end_beeped = true;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (elapsed_time >= (two_minutes - ten_seconds) && !warning_beep) {
+                        warning_beep = true;
+                        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
+                        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400);
+                    }
                 }
             }
         });
