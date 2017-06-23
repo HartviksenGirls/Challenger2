@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Chronometer main_timer;
     private long elapsed_time;
-    private long ten_seconds = 5000;
-    private long two_minutes = 10000; //120000
+    private long ten_seconds = 10000;
+    private long two_minutes = 120000; //120000
     private boolean end_beeped = false;
     private boolean warning_beep = false;
     private long get_elapsed_time() {

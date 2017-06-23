@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="victoriahartviksen.challenger">
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <receiver android:name=".MyWakefulReceiver"></receiver>
 
     <application
         android:allowBackup="true"
