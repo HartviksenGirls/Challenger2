@@ -17,4 +17,9 @@
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
 
+    <header
+        android:fragment="victoriahartviksen.challenger.SettingsActivity$BeepFrequencyPreferenceFragment"
+        android:icon="@drawable/beep_black_24dp"
+        android:title="@string/pref_header_beep_frequency" />
+
 </preference-headers>

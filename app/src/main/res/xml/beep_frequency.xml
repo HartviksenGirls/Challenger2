@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="delay_start_preference"
+        android:summary="@string/delay_start_setting_description"
+        android:title="@string/delayed_start_setting_name" />
+
+
+</PreferenceScreen>
