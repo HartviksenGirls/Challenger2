@@ -6,5 +6,9 @@
         android:summary="@string/delay_start_setting_description"
         android:defaultValue="false"/>
 
-
+    <SwitchPreference
+        android:key="@string/WARNING_BEEP"
+        android:title="@string/warning_beep_setting_name"
+        android:summary="@string/warning_beep_setting_description"
+        android:defaultValue="false"/>
 </PreferenceScreen>
