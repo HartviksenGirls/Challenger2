@@ -144,11 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-                    } else if (warning_beep && elapsed_time >= (two_minutes - ten_seconds) && !warning_beeped) {
-                        warning_beeped = true;
-
-                    } else if (elapsed_time >= (warningTime()) && !warning_beep) {
+                    } else if (warning_beep && elapsed_time >= (warningTime()) && !warning_beep) {
                         warning_beep = true;
                         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
                         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400);
