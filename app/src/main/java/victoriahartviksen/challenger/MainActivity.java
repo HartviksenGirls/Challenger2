@@ -1,10 +1,12 @@
 package victoriahartviksen.challenger;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                boolean delayStart = preferences.getBoolean(getString(R.string.KEY_PREF_DELAYED_START),false);
+                if (delayStart) {
+                    main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time + 5000);
+                } else {
+                    main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time);
+                }
                 main_timer.start();
             }
         });
