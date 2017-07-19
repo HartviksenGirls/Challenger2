@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private long two_minutes = 120000; //120000
     private boolean start_beeped = false;
     private boolean end_beeped = false;
-    private boolean warning_beep = false;
+    private boolean warning_beeped = false;
     private SharedPreferences preferences;
+    private boolean warning_beep = false;
     private long get_elapsed_time() {
         return SystemClock.elapsedRealtime() - main_timer.getBase();
     }
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 elapsed_time = zero_seconds;
                 main_timer.setBase(SystemClock.elapsedRealtime());
                 end_beeped = false;
-                warning_beep = false;
+                warning_beeped = false;
                 start_beeped = false;
 
             }
@@ -130,8 +131,9 @@ public class MainActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    } else if (elapsed_time >= (two_minutes - ten_seconds) && !warning_beep) {
-                        warning_beep = true;
+
+                    } else if (warning_beep && elapsed_time >= (two_minutes - ten_seconds) && !warning_beeped) {
+                        warning_beeped = true;
                         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
                         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400);
                     }
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+        warning_beep = preferences.getBoolean(getString(R.string.WARNING_BEEP),false);
     }
 
     @Override

@@ -84,7 +84,7 @@
     <string name="delayed_start_setting_name">Delay start</string>
     <string name="KEY_PREF_DELAYED_START">delay_start_preference</string>
     <string name="WARNING_BEEP">Warning Beep</string>
-    <string name="warning_beep_setting_name">Hear warning beep</string>
+    <string name="warning_beep_setting_name">Warning beep</string>
     <string name="warning_beep_setting_description">Hear 2 warning beeps after 1 minute and 50 seconds has passed</string>
 
 </resources>
