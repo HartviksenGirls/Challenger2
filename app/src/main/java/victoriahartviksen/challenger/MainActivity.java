@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Chronometer main_timer;
     private long elapsed_time;
+    private long zero_seconds = 0;
     private long ten_seconds = 10000;
     private long two_minutes = 120000; //120000
+    private boolean start_beeped = false;
     private boolean end_beeped = false;
     private boolean warning_beep = true; // true turns off the warning
     private long get_elapsed_time() {
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        elapsed_time = 0;
+        elapsed_time = zero_seconds;
 
 
         main_timer = (Chronometer)findViewById(R.id.mainTimer);
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                 boolean delayStart = preferences.getBoolean(getString(R.string.KEY_PREF_DELAYED_START),false);
                 if (delayStart) {
-                    main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time + 5000);
+                    main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time + 5500);
                 } else {
                     main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time);
                 }
@@ -73,10 +75,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 main_timer.stop();
-                elapsed_time = 0;
+                elapsed_time = zero_seconds;
                 main_timer.setBase(SystemClock.elapsedRealtime());
                 end_beeped = false;
                 warning_beep = false;
+                start_beeped = false;
 
             }
         });
@@ -102,6 +105,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 elapsed_time = get_elapsed_time();
+                if (!start_beeped && elapsed_time > -1000) {
+                    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
+                    try {
+                        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 900);
+                        start_beeped = true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 //2 mins have passed
                 if (!end_beeped) {
                     if (elapsed_time >= two_minutes) {
