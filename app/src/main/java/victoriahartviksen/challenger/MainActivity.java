@@ -144,14 +144,12 @@ public class MainActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-<<<<<<< HEAD
 
                     } else if (warning_beep && elapsed_time >= (two_minutes - ten_seconds) && !warning_beeped) {
                         warning_beeped = true;
-=======
+
                     } else if (elapsed_time >= (warningTime()) && !warning_beep) {
                         warning_beep = true;
->>>>>>> c42ad199ff6df747f0256628c78d3fa11cae0e14
                         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
                         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400);
                     }
@@ -163,10 +161,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-<<<<<<< HEAD
         warning_beep = preferences.getBoolean(getString(R.string.WARNING_BEEP),false);
-=======
->>>>>>> 9616f6362d573685543c4d1478f45bea82601fa6
     }
 
     @Override
