@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private long ten_seconds = 10000;
     private long two_minutes = 120000; //120000
     private boolean end_beeped = false;
-    private boolean warning_beep = false;
+    private boolean warning_beep = true; // true turns off the warning
     private long get_elapsed_time() {
         return SystemClock.elapsedRealtime() - main_timer.getBase();
     }
