@@ -82,5 +82,6 @@
     <string name="pref_header_beep_frequency">Beep frequency</string>
     <string name="delay_start_setting_description">Delay the start of your timer to 5 seconds after you press start</string>
     <string name="delayed_start_setting_name">Delay start</string>
+    <string name="KEY_PREF_DELAYED_START">delay_start_preference</string>
 
 </resources>
