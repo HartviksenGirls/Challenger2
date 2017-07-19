@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                 boolean delayStart = preferences.getBoolean(getString(R.string.KEY_PREF_DELAYED_START),false);
                 if (delayStart) {
                     main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time + 5500);
@@ -145,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+<<<<<<< HEAD
         warning_beep = preferences.getBoolean(getString(R.string.WARNING_BEEP),false);
+=======
+>>>>>>> 9616f6362d573685543c4d1478f45bea82601fa6
     }
 
     @Override
