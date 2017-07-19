@@ -86,5 +86,8 @@
     <string name="WARNING_BEEP">Warning Beep</string>
     <string name="warning_beep_setting_name">Hear warning beep</string>
     <string name="warning_beep_setting_description">Hear 2 warning beeps after 1 minute and 50 seconds has passed</string>
+    <string name="KEY_PREF_SHORT_TEST">short_test_preference</string>
+    <string name="short_test_mode_description">Change the plank time to 10 seconds</string>
+    <string name="short_test_mode_title">Testing mode</string>
 
 </resources>

@@ -34,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
         return SystemClock.elapsedRealtime() - main_timer.getBase();
     }
 
+    private long plankTime() {
+        if (preferences.getBoolean(getString(R.string.KEY_PREF_SHORT_TEST), false)) {
+            return ten_seconds;
+        }
+        return two_minutes;
+    }
+
+    private long warningTime() {
+        if (preferences.getBoolean(getString(R.string.KEY_PREF_SHORT_TEST), false)) {
+            return 5000;
+        }
+        return 110000;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 elapsed_time = get_elapsed_time();
 
-                if (elapsed_time >= two_minutes) {
+                if (elapsed_time >= plankTime()) {
                     SendPIntent();
 
                 } else {
@@ -116,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //2 mins have passed
                 if (!end_beeped) {
-                    if (elapsed_time >= two_minutes) {
+                    if (elapsed_time >= plankTime()) {
 
                         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
                         try {
@@ -129,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    } else if (elapsed_time >= (two_minutes - ten_seconds) && !warning_beep) {
+                    } else if (elapsed_time >= (warningTime()) && !warning_beep) {
                         warning_beep = true;
                         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 75);
                         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400);
