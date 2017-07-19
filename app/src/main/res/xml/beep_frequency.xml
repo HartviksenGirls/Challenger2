@@ -11,4 +11,11 @@
         android:title="@string/warning_beep_setting_name"
         android:summary="@string/warning_beep_setting_description"
         android:defaultValue="false"/>
+
+    <SwitchPreference
+        android:key="@string/KEY_PREF_SHORT_TEST"
+        android:title="@string/short_test_mode_title"
+        android:summary="@string/short_test_mode_description"
+        android:defaultValue="false"/>
+
 </PreferenceScreen>
