@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private long two_minutes = 120000; //120000
     private boolean start_beeped = false;
     private boolean end_beeped = false;
-    private boolean warning_beep = true; // true turns off the warning
+    private boolean warning_beep = false;
+    private SharedPreferences preferences;
     private long get_elapsed_time() {
         return SystemClock.elapsedRealtime() - main_timer.getBase();
     }
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                 boolean delayStart = preferences.getBoolean(getString(R.string.KEY_PREF_DELAYED_START),false);
                 if (delayStart) {
                     main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time + 5500);
@@ -137,6 +138,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    protected void onResume(){
+        super.onResume();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
     }
 
     @Override
