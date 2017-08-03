@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private long get_elapsed_time() {
         return SystemClock.elapsedRealtime() - main_timer.getBase();
     }
+
+    private PowerManager.WakeLock screenLock;
 
     private long plankTime() {
         if (preferences.getBoolean(getString(R.string.KEY_PREF_SHORT_TEST), false)) {
@@ -71,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
                     main_timer.setBase(SystemClock.elapsedRealtime() - elapsed_time);
                 }
                 main_timer.start();
+
+                PowerManager pm = (PowerManager) getSystemService(v.getContext().POWER_SERVICE);
+                screenLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Timer going");
+                screenLock.acquire();
+
             }
         });
 
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 main_timer.stop();
                 elapsed_time = SystemClock.elapsedRealtime() - main_timer.getBase();
+                screenLock.release();
 
             }
         });
